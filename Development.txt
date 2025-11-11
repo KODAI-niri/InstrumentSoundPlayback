@@ -1,0 +1,180 @@
+このプログラムは、全20の楽器の音を作りだし、
+並行に出力を行うプログラムである。
+全20の楽器とは、
+エレクトリックギター
+オーボエ
+レゲエオルガン
+トランペット
+三味線
+フルート
+電子ドラム
+バイオリン
+ビオラ
+チェロ
+コントラバス
+ウクレレ
+ビブラフォン
+フリューゲルホルン
+トランペット
+コルネット
+トロンボーン
+ホルン
+チューバ
+ピアノ
+である。
+これらの楽器のクラスを作り、楽器の色の分類を行ってから、
+それらの色全てをゲーター(スレッド管理者)に渡し、
+並行に音を鳴らしていく
+
+以下に、ゴール(目的)とそのターゲット(目標)群を示す
+
+分類される色はまた変更される可能性があるってことを覚えておこう！！！
+まず、自分でやる。自分でやって写像されなかった場合は、周波数の幅を広げる
+
+Goal:
+    並行に全楽器の音を出力すること
+Target:
+    1: 楽器クラスを実装
+    2: 楽器クラスの子クラスを実装 & テスト
+    3: 色クラスを実装
+    4: 色クラスの子クラスを実装 & テスト <- できたら2025/10/26まで
+
+    5: ゲーターにどんなオブジェクト(関数なのか、クラスなのか)を入れるか決める
+    6: ゲーターを実装する。
+    7: 並行演奏を実装 & テストする
+
+Future:
+    これを元にして、実験のプログラムを作成する。
+
+AbstractDetaStructure:
+Colors
+                        Color
+                          |
+                          |
+                          |
+            ----------------------------
+            |      |          |        |
+            |      |          |        |
+            |      |          |        |
+            |      |          |        |
+           Red    Blue      Yellow   Green
+
+Gater
+                    InstrumentGater
+
+Instrument
+                      Instrument
+                          |
+                          |
+                          |
+            -----------------------------
+        All Instrument (is Children of Instrument)
+
+
+DetailDetaStructure
+
+################## Definition of Instrument Classes ##################
+Instrument:
+    Properties:
+        musicalInstrumentSounds : 楽器が奏でる音の集合
+        color : 属する色クラスの名前
+    Methods:
+        __init__ イニシャライザー
+        makeSound 抽象的なメソッド、子クラスはこれを継承する 引数に周波数群が渡ってくる
+
+ElectronicGuitar
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する Karplus-Strong 
+
+Oboe
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 物理モデル 波動方程式+リードモデル
+
+ReggaeOrgan
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 加算合成 サイン波の和 + カッティング(ADSR envelope)
+
+Trumpet
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 物理モデル合成 FM合成によるBrass音色も視野
+
+ElectronicDrum
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 減算合成
+
+Violin Viola Cello DoubleBass
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 物理モデル + 非線形接触
+
+JapaneseGuitar
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する Karplus-Strong or 物理モデル(皮の共鳴)
+
+Flute
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 物理モデルがベター FM合成も視野
+
+Piano
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 物理モデルピアノを用いる
+
+Flugelhorn Cornet Trombone Horn Tuba
+    Properties:
+    Methods:
+        __init__ イニシャライザー
+        makeSound 音を作成する 物理モデルを用いる。FM合成も視野
+
+################## Definition of Color Classes ##################
+
+Color
+    Properties:
+        instruments : 楽器群
+    Methods:
+        __init__ イニシャライザー 
+        perform 自分が持っている楽器全てに音を作れ!と命令を送る
+
+Red:
+    Properties:
+    Methods:
+        __init__ イニシャライザー 自分が持つ楽器のインスタンスを生成し、
+                 当該プロパティに加える
+        perform 上位クラスをそのまま使う。
+
+Blue:
+    Properties:
+    Methods:
+        __init__ イニシャライザー 自分が持つ楽器のインスタンスを生成し、
+                 当該プロパティに加える
+        perform 上位クラスをそのまま使う。
+
+Green:
+    Properties:
+    Methods:
+        __init__ イニシャライザー 自分が持つ楽器のインスタンスを生成し、
+                 当該プロパティに加える
+        perform 上位クラスをそのまま使う。
+
+Yellow:
+    Propeties:
+    Methods:
+        __init__ イニシャライザー。自分が持つ楽器のインスタンスを生成し、
+                 当該プロパティに加える
+        perform 上位クラスをそのまま使う。
